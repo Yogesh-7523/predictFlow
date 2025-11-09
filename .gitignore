@@ -1,0 +1,38 @@
+# Java/Maven
+/target/
+/*.log
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+/.idea/
+/*.iml
+/out/
+
+# VS Code
+/.vscode/
+
+# Sensitive config
+src/main/resources/application.properties
+src/main/resources/*.yml
+src/main/resources/*.yaml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Misc
+/shelf/
+/.idea/workspace.xml
+/mavenHomeManager.xml
+project.txt
