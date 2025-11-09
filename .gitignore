@@ -1,38 +1,82 @@
-# Java/Maven
-/target/
-/*.log
-*.class
+# === Java / Maven Build ===
+target/
 *.jar
 *.war
 *.ear
-
-# IntelliJ IDEA
-/.idea/
-/*.iml
-/out/
-
-# VS Code
-/.vscode/
-
-# Sensitive config
-src/main/resources/application.properties
-src/main/resources/*.yml
-src/main/resources/*.yaml
-
-# OS files
-.DS_Store
-Thumbs.db
+*.class
+*.log
+*.log.*
+*.tmp
+*.temp
 
 # Maven
 .mvn/
+mvnw
+mvnw.cmd
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
+maven-wrapper.properties
 
-# Misc
-/shelf/
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+*.iws
+*.ipr
+/out/
 /.idea/workspace.xml
-/mavenHomeManager.xml
+/.idea/tasks.xml
+/.idea/gradle.xml
+/.idea/dictionaries
+/.idea/libraries
+/.idea/modules.xml
+/.idea/runConfigurations
+/.idea/dataSources.local.xml
+/.idea/sqlDataSources.xml
+
+# === VS Code ===
+.vscode/
+*.code-workspace
+
+# === GitHub Copilot (AI Files) ===
+/copilot.data.migration.agent.xml
+/copilot.data.migration.ask.xml
+/copilot.data.migration.ask2agent.xml
+/copilot.data.migration.edit.xml
+/copilot.data.migration.agent.xml.idea
+/copilot.data.migration.ask.xml.idea
+/copilot.data.migration.ask2agent.xml.idea
+/copilot.data.migration.edit.xml.idea
+
+# === Sensitive Config (DO NOT COMMIT!) ===
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/application.yaml
+src/main/resources/application-*.properties
+src/main/resources/application-*.yml
+src/main/resources/application-*.yaml
+src/test/resources/application.properties
+src/test/resources/application.yml
+src/test/resources/application.yaml
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Misc ===
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.gradle
+build/
+dist/
+bin/
+.shelf/
 project.txt
+PredictFlow.iml
