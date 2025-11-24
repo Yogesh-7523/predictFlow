@@ -1,64 +1,80 @@
-# Ignore builds and artifacts
-target/
-*.jar
-*.war
-*.ear
-*.class
-
-# Ignore logs and temp files
-*.log
-*.tmp
-*.temp
-
-# Maven wrapper files
-.mvn/
-mvnw
-mvnw.cmd
-
-# IntelliJ IDEA files/folders
-.idea/
-*.iml
-/out/
-/*.iws
-/.idea/*
-
-# VS Code files
-.vscode/
-*.code-workspace
-
-# OS/System files
+# OS files
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# GitHub Copilot files (AI generated)
-copilot.*
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
 
-# Sensitive config files - exclude sensitive app config from all microservices
-**/src/main/resources/application.properties
-**/src/main/resources/application.yml
-**/src/main/resources/application-*.properties
-**/src/main/resources/application-*.yml
-
-# Test resources sensitive config
-**/src/test/resources/application.properties
-**/src/test/resources/application.yml
-
-# Docker compose sensitive or env files
-**/docker-compose*.yml
-**/*.env
-
-# Other project-specific ignores
-*.swp
-.project
-.classpath
-.settings/
-.gradle/
-build/
-dist/
-bin/
-.shelf/
-project.txt
-
-# Ignore generated files by IDE or tools not meant for VCS
+# Java / Maven
+target/
 **/target/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+.classpath
+/.settings/
+
+# Spring / config / sensitive
+application.properties
+application.yml
+*.env
+.env.*
+secrets.*
+credentials.*
+secrets.env
+aws-credentials
+*.jks
+*.keystore
+*.pem
+*.key
+*.p12
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+ENV/
+pip-wheel-metadata/
+*.egg-info/
+*.egg
+.pytest_cache/
+
+# ML artifacts
+*.pkl
+ml-service/model/
+ml-service/*.pkl
+
+# Docker
+docker-compose.override.yml
+**/docker-compose.override.yml
+
+# OS temporary / editors
+*~
+*.swp
+*.swo
+*.tmp
+
+# Build / package managers
+node_modules/
+bower_components/
+
+# Misc
+.idea/.gitignore
+*.iml
+.Dockerfile.swp
