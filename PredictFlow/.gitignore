@@ -1,0 +1,64 @@
+# Ignore builds and artifacts
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Ignore logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Maven wrapper files
+.mvn/
+mvnw
+mvnw.cmd
+
+# IntelliJ IDEA files/folders
+.idea/
+*.iml
+/out/
+/*.iws
+/.idea/*
+
+# VS Code files
+.vscode/
+*.code-workspace
+
+# OS/System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# GitHub Copilot files (AI generated)
+copilot.*
+
+# Sensitive config files - exclude sensitive app config from all microservices
+**/src/main/resources/application.properties
+**/src/main/resources/application.yml
+**/src/main/resources/application-*.properties
+**/src/main/resources/application-*.yml
+
+# Test resources sensitive config
+**/src/test/resources/application.properties
+**/src/test/resources/application.yml
+
+# Docker compose sensitive or env files
+**/docker-compose*.yml
+**/*.env
+
+# Other project-specific ignores
+*.swp
+.project
+.classpath
+.settings/
+.gradle/
+build/
+dist/
+bin/
+.shelf/
+project.txt
+
+# Ignore generated files by IDE or tools not meant for VCS
+**/target/
