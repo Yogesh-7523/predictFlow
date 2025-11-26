@@ -1,9 +1,9 @@
-# OS files
+# OS generated files
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# IDEs
+# IDE files
 .idea/
 *.iml
 *.ipr
@@ -21,9 +21,11 @@ hs_err_pid*
 .classpath
 /.settings/
 
-# Spring / config / sensitive
+# Sensitive configuration files (e.g., with DB passwords)
 application.properties
 application.yml
+**/application.properties
+**/application.yml
 *.env
 .env.*
 secrets.*
@@ -60,7 +62,7 @@ pip-wheel-metadata/
 ml-service/model/
 ml-service/*.pkl
 
-# Docker
+# Docker files
 docker-compose.override.yml
 **/docker-compose.override.yml
 
@@ -70,7 +72,7 @@ docker-compose.override.yml
 *.swo
 *.tmp
 
-# Build / package managers
+# Build/package managers
 node_modules/
 bower_components/
 
@@ -78,3 +80,6 @@ bower_components/
 .idea/.gitignore
 *.iml
 .Dockerfile.swp
+
+# Exclude Python virtual environment inside ml-service
+ml-service/.venv/
