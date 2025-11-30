@@ -17,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.time.Instant;
 import java.util.Base64;
 
 @Slf4j
@@ -28,45 +27,53 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
     private final AuthBlacklistRepository blacklistRepo;
     private final EventAuditService auditService;
 
-    @Value("${jwt.secret:your-secret-key-change-in-production}")
+    @Value("${jwt.secret:}")
     private String jwtSecret;
+
+    private byte[] signingKeyBytes() {
+        if (jwtSecret == null || jwtSecret.isBlank()) {
+            throw new RuntimeException("jwt.secret is not configured");
+        }
+        try {
+            // Treat configured value as Base64 if it looks like Base64; otherwise use raw bytes
+            if (jwtSecret.matches("^[A-Za-z0-9+/=]+$") && jwtSecret.length() % 4 == 0) {
+                return Base64.getDecoder().decode(jwtSecret);
+            } else {
+                return jwtSecret.getBytes(StandardCharsets.UTF_8);
+            }
+        } catch (IllegalArgumentException e) {
+            return jwtSecret.getBytes(StandardCharsets.UTF_8);
+        }
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, org.springframework.cloud.gateway.filter.GatewayFilterChain chain) {
         String path = exchange.getRequest().getPath().value();
-
         try {
             String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
 
-                // check blacklist
                 String tokenHash = sha256(token);
                 if (blacklistRepo.existsByTokenHash(tokenHash)) {
-                    log.warn("Blocked request with blacklisted token for path={}", path);
                     auditService.record("gateway.request.blocked", "{\"path\":\"" + path + "\"}", "gateway", null);
                     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     return exchange.getResponse().setComplete();
                 }
 
-                // validate token signature
+                byte[] keyBytes = signingKeyBytes();
                 Jwts.parserBuilder()
-                        .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
+                        .setSigningKey(Keys.hmacShaKeyFor(keyBytes))
                         .build()
                         .parseClaimsJws(token);
 
-                // optional: record successful auth audit
                 auditService.record("gateway.request.authenticated", "{\"path\":\"" + path + "\"}", "gateway", null);
-                log.debug("Token validated for path={}", path);
-
             } else if (!isPublicRoute(path)) {
-                log.warn("Unauthorized request to protected path={}", path);
                 auditService.record("gateway.request.unauthenticated", "{\"path\":\"" + path + "\"}", "gateway", null);
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             } else {
-                // public route — record audit optionally
                 auditService.record("gateway.request.public", "{\"path\":\"" + path + "\"}", "gateway", null);
             }
         } catch (Exception e) {
@@ -75,21 +82,15 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
-
         return chain.filter(exchange);
     }
 
-    @Override
-    public int getOrder() {
-        return -1;
-    }
-
     private boolean isPublicRoute(String path) {
-                        return path.equals("/") ||
-                               path.startsWith("/health") ||
-                               path.startsWith("/actuator") ||
-                               path.startsWith("/auth/") ||
-                               path.startsWith("/api/auth/");
+        return path.equals("/") ||
+                path.startsWith("/health") ||
+                path.startsWith("/actuator") ||
+                path.startsWith("/auth/") ||
+                path.startsWith("/api/auth/");
     }
 
     private String sha256(String in) {
@@ -101,4 +102,7 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int getOrder() { return -1; }
 }

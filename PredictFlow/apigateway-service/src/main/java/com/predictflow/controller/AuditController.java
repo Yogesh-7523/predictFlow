@@ -19,7 +19,7 @@ public class AuditController {
     private final AuthBlacklistRepository blacklistRepo;
 
     @GetMapping("/audits")
-    public List<EventAudit> recentAudits(@RequestParam(defaultValue = "50") int limit) {
+    public List<EventAudit> recentAudits(@RequestParam(name = "limit", defaultValue = "50") int limit) {
         return auditService.listRecent(limit);
     }
 
