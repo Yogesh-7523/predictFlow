@@ -18,10 +18,11 @@
     <packaging>jar</packaging>
     <name>transaction-service</name>
 
-    <properties>
-        <java.version>17</java.version>
-        <lombok.version>1.18.42</lombok.version> <!-- Keep Lombok version consistent -->
-    </properties>
+<!--    <properties>-->
+<!--        <java.version>25</java.version> &lt;!&ndash; Match runtime Java 25 &ndash;&gt;-->
+<!--        <lombok.version>1.18.42</lombok.version>-->
+<!--    </properties>-->
+
 
     <dependencies>
         <!-- Spring Boot Starter Web -->
@@ -36,11 +37,17 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+
         <!-- PostgreSQL Driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.7.5</version>
         </dependency>
 
         <!-- Spring Kafka -->
@@ -82,6 +89,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.5.0</version>
             </plugin>
 
             <!-- Compiler Plugin with Lombok annotation processor -->

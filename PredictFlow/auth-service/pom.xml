@@ -22,7 +22,7 @@
     <description>Authentication microservice for PredictFlow</description>
 
     <properties>
-        <java.version>24</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>

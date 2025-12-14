@@ -12,15 +12,18 @@ public class ApiGatewayApplication {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
 
-    @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route("auth-service", r -> r.path("/auth/**", "/api/auth/**")
-                        .uri("http://localhost:8081"))
-                .route("txn-service", r -> r.path("/txn/**", "/api/txn/**")
-                        .uri("http://localhost:8082"))
-                .route("retry-engine", r -> r.path("/retry/**", "/api/retry/**")
-                        .uri("http://localhost:8083"))
-                .build();
-    }
+//    @Bean
+//    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route("auth-service", r -> r.path("/auth/**", "/api/auth/**")
+//                        .uri("http://predictflow_auth:8081"))  // ✅ FIXED
+//                .route("txn-service", r -> r.path("/txn/**", "/api/txn/**")
+//                        .uri("http://predictflow_transaction:8082"))  // ✅ FIXED
+//                .route("retry-engine", r -> r.path("/retry/**", "/api/retry/**")
+//                        .uri("http://predictflow_retry:8083"))  // ✅ FIXED
+//                .route("ml-service", r -> r.path("/predict/**")  // ✅ ML ROUTE
+//                        .uri("http://predictflow_ml:5000"))
+//                .build();
+//    }
+
 }
